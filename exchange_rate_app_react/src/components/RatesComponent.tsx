@@ -18,8 +18,21 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import FormValue from "../model/FormValue";
 import CustomDatePicker from "./custom_datepicker/CustomDatePicker";
+import formValue from "../model/FormValue";
+import {ConversionApiResponse} from "../model/ConversionApiResponse";
 
-const ConversionContainerD = () => {
+
+// Define the types for the props of ConversionComponent
+type RatesComponentProps = {
+    conversionData: ConversionApiResponse;
+};
+
+
+
+const RatesComponent:React.FC<RatesComponentProps> = (
+    {
+        conversionData
+    }) => {
 
     const designBorder = {
         // border: '1px solid black',
@@ -30,6 +43,32 @@ const ConversionContainerD = () => {
         width: '26rem'
     }
 
+
+    function formatCurrencyInput(value: string): string {
+        //Removes all non-numeric characters except the decimal point
+        let num = value.replace(/[^\d.]/g, '');
+
+        if (num === "" || num === "." || parseFloat(num) === 0) {
+            return "0";
+        }
+
+        //Handles multiple decimal points by keeping only the first
+        let firstDecimalIndex = num.indexOf('.');
+        if (firstDecimalIndex !== -1) {
+            num = num.substring(0, firstDecimalIndex + 1) + num.substring(firstDecimalIndex + 1).replace(/\./g, '');
+        }
+
+        //Splits number by decimal point
+        let parts = num.split('.');
+        // Remove leading zeros from the integer part and replace digits with comma separated values for thousands
+        parts[0] = parts[0].replace(/^0+/, ''); // Remove leading zeros
+        if (parts[0] === '') parts[0] = '0'; // Ensure at least a zero if the integer part is empty
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        //Rejoins the integer and decimal parts
+        num = parts.join('.');
+        return num;
+    }
 
     return (
         <div style={{
@@ -63,17 +102,21 @@ const ConversionContainerD = () => {
                                 ...cardWidth
                             }}>
                                 <Card.Header as="h4">
-                                    Special title treatment
+                                    {conversionData.query.from} to {conversionData.query.to}
                                 </Card.Header>
                                 <Card.Body>
                                     <Table>
                                         <tbody>
-                                        {Array.from({ length: 11 }).map((_, index) => (
-                                            <tr key={index}>
-                                                <td>50 Euros</td>
-                                                <td>Us Dollars</td>
-                                            </tr>
-                                        ))}
+                                        {Array.from({ length: 10 }).map((_, index) => {
+                                            const value = (index + 1) * 100;
+                                            const result = value * conversionData.info.rate;
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{formatCurrencyInput(value.toString())} {conversionData.query.from}</td>
+                                                    <td>{formatCurrencyInput(result.toString())} {conversionData.query.to}</td>
+                                                </tr>
+                                            );
+                                        })}
                                         </tbody>
                                     </Table>
                                 </Card.Body>
@@ -88,17 +131,21 @@ const ConversionContainerD = () => {
                                 ...cardWidth
                             }}>
                                 <Card.Header as="h4">
-                                    Special title treatment
+                                    {conversionData.query.to} to {conversionData.query.from}
                                 </Card.Header>
                                 <Card.Body>
                                     <Table>
                                         <tbody>
-                                        {Array.from({ length: 11 }).map((_, index) => (
-                                            <tr key={index}>
-                                                <td>50 USDs</td>
-                                                <td>European Euros</td>
-                                            </tr>
-                                        ))}
+                                        {Array.from({length: 10}).map((_, index) => {
+                                            const value = (index + 1) * 100;
+                                            const result = value / conversionData.info.rate;
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{formatCurrencyInput(value.toString())} {conversionData.query.to}</td>
+                                                    <td>{formatCurrencyInput(result.toString())} {conversionData.query.from}</td>
+                                                </tr>
+                                            );
+                                        })}
                                         </tbody>
                                     </Table>
                                 </Card.Body>
@@ -114,4 +161,4 @@ const ConversionContainerD = () => {
 }
 
 
-export default ConversionContainerD;
+export default RatesComponent;

@@ -29,7 +29,15 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/api/test/tester","/api/test/testerB", "/api/v1/auth/register", "/api/v1/auth/tester")// WhiteList requests
+                .requestMatchers("/api/test/tester",
+                        "/api/test/testerB",
+                        "/api/v1/auth/register",
+                        "/api/v1/auth/tester",
+                        "/api/v1/rates/latest",
+                        "/api/v1/rates/convert",
+                        "/api/v1/rates/currency-list",
+                        "/api/v1/rates/time-series"
+                )// WhiteList requests
                 .permitAll()// Permit white-list requests
                 .requestMatchers("/api/test/testerC")
                 .authenticated())//Authenticate others
@@ -38,5 +46,28 @@ public class SecurityConfig {
                 .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(requests -> requests
+//                        .requestMatchers("/api/v1/auth/**","/api/v1/demo/hello")// WhiteList requests
+//                        .permitAll()// Permit white-list requests
+//                        .requestMatchers("/api/v1/demo/user")
+//                        .hasRole("ADMIN")
+//                        .anyRequest()
+//                        .authenticated()//Authenticate others
+//                )
+//                .sessionManagement((sessionManagement) ->
+//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
+
 
 }

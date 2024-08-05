@@ -1,8 +1,8 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
-import ConversionContainerB from "./ConversionContainerB";
+import ConversionComponent from "./ConversionComponent";
 
-const BackDesign = () => {
+const ConversionComponentBackground = () => {
     const designBorder = {
         // border: '1px solid black',
         // border: 'none',
@@ -31,10 +31,10 @@ const BackDesign = () => {
                     {/* Content of the second row */}
                 </Row>
             </Col>
-            <ConversionContainerB/>
+            {/*<ConversionComponent/>*/}
         </div>
 
     );
 }
 
-export default BackDesign;
+export default ConversionComponentBackground;

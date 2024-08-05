@@ -117,7 +117,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     email: email,
                     uid: user.uid,
                 });
-                const response = await fetch(`${Util.apiUrl}/api/v1/auth/register`, {
+                const response = await fetch(`${Util.apiUrl}auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: requestBody,
