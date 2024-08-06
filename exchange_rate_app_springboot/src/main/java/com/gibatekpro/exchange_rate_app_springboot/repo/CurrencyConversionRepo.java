@@ -11,8 +11,9 @@ import java.util.Optional;
 @Repository
 public interface CurrencyConversionRepo extends JpaRepository<CurrencyConversion, Long> {
 
-    Optional<CurrencyConversion> findByBaseCurrencyAndToCurrencyAndConversionDate(
+    Optional<CurrencyConversion> findFirstByBaseCurrencyAndToCurrencyAndConversionDate(
             Currency baseCurrency, Currency toCurrency, Date conversionDate);
+
 
 
 }

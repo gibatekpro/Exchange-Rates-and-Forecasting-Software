@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {Col} from "react-bootstrap";
 import {useAuth} from "../../services/auth_guard/AuthProvider";
+import {appName} from "../../util/utils";
+import {bool} from "yup";
 
 
 interface valuesType {
@@ -23,6 +25,7 @@ export const RegisterPage: React.FC = () => {
     const [passVisible, setPassVisible] = useState(false);
     const [passConfirmVisible, setPassConfirmVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [registrationFailed, setRegistrationFailed] = useState(false);
     let auth = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -38,13 +41,20 @@ export const RegisterPage: React.FC = () => {
     async function handleSubmit(values: valuesType) {
         try {
             // Call the login function with email and password
-            await auth?.register(values.firstName, values.lastName, values.email, values.password, (user: string) => {
-                console.log(user);
+            await auth?.register(values.firstName, values.lastName, values.email, values.password, (user: string, failed: boolean) => {
                 // Navigate back to the previous location or to the home page if no location is available
-                const from = (location.state as any)?.from?.pathname || "/";
-                navigate(from, { replace: true });
+                if (!failed) {
+                    alert("Registration Successful")
+                    const from = (location.state as any)?.from?.pathname || "/";
+                    navigate(from, {replace: true});
+                } else {
+
+                    setRegistrationFailed(true)
+
+                }
             });
         } catch (error) {
+            setRegistrationFailed(true)
             console.log("An error occurred")
         } finally {
             setIsLoading(false);
@@ -121,7 +131,7 @@ export const RegisterPage: React.FC = () => {
                                   borderRadius: "8px",
                                   backgroundColor: "#fff"
                               }} className="bg-body-tertiary">
-                            <a className="logo text-center fs-3" href="/public">ShopVerse</a>
+                            <a className="logo text-center fs-3" href="/public">{appName}</a>
                             <hr/>
                             <h6 className="text-center mt-2">Create an account</h6>
                             <hr className="mb-5"/>
@@ -130,6 +140,10 @@ export const RegisterPage: React.FC = () => {
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </h6>
+                            <div className="alert alert-danger alert-dismissible fade show" role="alert"
+                                 hidden={(isLoading) || (!isLoading && !registrationFailed)}>
+                                An error occurred. Registration failed.
+                            </div>
                             <Row className="mb-3">
                                 <Col>
                                     <Form.Group controlId="firstName">

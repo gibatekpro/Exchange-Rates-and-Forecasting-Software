@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Formik} from "formik";
 import {useAuth} from "../../services/auth_guard/AuthProvider";
+import {appName} from "../../util/utils";
 
 
 export const LoginPage:React.FC = () => {
@@ -34,6 +35,7 @@ export const LoginPage:React.FC = () => {
                 navigate(from, { replace: true });
             });
         } catch (error) {
+            setLoginFailed(true);
             console.log("An error occurred");
         } finally {
             setIsLoading(false);
@@ -89,7 +91,7 @@ export const LoginPage:React.FC = () => {
                               borderRadius: "8px",
                               backgroundColor: "#fff"
                           }} className="bg-body-tertiary">
-                        <a className="logo text-center fs-3" href="/public">ShopVerse</a>
+                        <a className="logo text-center fs-3" href="/public">{appName}</a>
                         <hr/>
                         <h6 className="text-center mt-2">Sign in</h6>
                         <hr className="mb-5"/>
@@ -98,7 +100,12 @@ export const LoginPage:React.FC = () => {
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         </h6>
-                        <h6 className="text-center" style={{color: "red"}} hidden={(isLoading) || (!isLoading && !loginFailed)}>Details incorrect or user unverified</h6>
+                        <div className="alert alert-danger alert-dismissible fade show" role="alert" hidden={(isLoading) || (!isLoading && !loginFailed)}>
+                            Failed to sign in. Check credentials.
+                        </div>
+                        {/*<h6 className="text-center" style={{color: "red"}}*/}
+                        {/*    hidden={(isLoading) || (!isLoading && !loginFailed)}>Details incorrect or user*/}
+                        {/*    unverified</h6>*/}
                         <Row className="mb-3">
                             <Form.Group controlId="email">
                                 <Form.Label>Email</Form.Label>
@@ -162,7 +169,8 @@ export const LoginPage:React.FC = () => {
                         <Button className="hard-button blue" type="submit" disabled={isLoading}>Sign in</Button>
                         <br/>
                         <div className="d-flex justify-content-between">
-                            <small style={{fontStyle: 'italic'}}><Link to="/reset-password">Forgot password</Link></small>
+                            <small style={{fontStyle: 'italic'}}><Link to="/reset-password">Forgot
+                                password</Link></small>
                         </div>
                         <div className="d-flex justify-content-between" style={{
                             minHeight: '20px'

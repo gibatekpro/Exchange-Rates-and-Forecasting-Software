@@ -26,3 +26,7 @@ Firebase Authentication [Documentation](https://firebase.google.com/docs/web/set
 Firebase Authentication UI [Documentation](https://firebase.google.com/docs/web/setup#available-libraries)
 
 #### `npm install firebaseui --force --save`
+
+Ag Charts [Documentation](https://charts.ag-grid.com/react/quick-start/)
+
+#### `npm install ag-charts-react --force`

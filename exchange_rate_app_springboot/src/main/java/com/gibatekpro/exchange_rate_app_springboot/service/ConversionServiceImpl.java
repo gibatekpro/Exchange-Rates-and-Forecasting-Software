@@ -79,7 +79,7 @@ public class ConversionServiceImpl implements ConversionService {
         Date conversionDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         //Checks if the conversion rate already exists in the repository
-        Optional<CurrencyConversion> existingConversion = currencyConversionRepo.findByBaseCurrencyAndToCurrencyAndConversionDate(baseCurrency, toCurrency, conversionDate);
+        Optional<CurrencyConversion> existingConversion = currencyConversionRepo.findFirstByBaseCurrencyAndToCurrencyAndConversionDate(baseCurrency, toCurrency, conversionDate);
 
         //If the conversion rate exists, return it
         if (existingConversion.isPresent()) {
@@ -122,24 +122,25 @@ public class ConversionServiceImpl implements ConversionService {
     @Override
     @Transactional
     public TimeSeriesApiResponse fetchTimeSeriesConversion(String from, String to, LocalDate startDate, LocalDate endDate) {
-        // Fetches the base currency from the repository
+        //Fetches the base currency from the repository
         Currency baseCurrency = currencyRepo.findByCurrencyCode(from)
                 .orElseThrow(() -> new RuntimeException("Base currency not found: " + from));
 
-        // Fetches the to-currency from the repository
+        //Fetches the to-currency from the repository
         Currency toCurrency = toCurrencyRepo.findByCurrencyCode(to)
                 .orElseThrow(() -> new RuntimeException("To currency not found: " + to));
 
-        // Initialize the response object
+        //Initializes the response object
         TimeSeriesApiResponse response = new TimeSeriesApiResponse();
         response.setSuccess(true);
         response.setTimeSeries(true);
         response.setStartDate(startDate.toString());
         response.setEndDate(endDate.toString());
         response.setBase(from);
-        Map<String, Map<String, Double>> rates = new HashMap<>();
+        response.setTo(to);
+        Map<String, Map<String, Double>> rates = new LinkedHashMap<>(); // Use LinkedHashMap to maintain order
 
-        // Loop through each date from start date to end date
+        //Loops through each date from start date to end date
         LocalDate currentDate = startDate;
         while (!currentDate.isAfter(endDate)) {
             // Fetch the conversion rate from the external API
@@ -155,15 +156,16 @@ public class ConversionServiceImpl implements ConversionService {
             ConversionApiResponse apiResponse = restTemplate.getForObject(url, ConversionApiResponse.class);
 
             if (apiResponse != null && apiResponse.isSuccess()) {
-                rates.computeIfAbsent(currentDate.toString(), k -> new HashMap<>()).put(to, apiResponse.getInfo().getRate());
+                rates.computeIfAbsent(currentDate.toString(), k -> new LinkedHashMap<>()).put(to, apiResponse.getInfo().getRate());
             }
 
-            // Move to the next date
+            //Moves to the next date
             currentDate = currentDate.plusDays(1);
         }
 
         response.setRates(rates);
         return response;
     }
+
 
 }

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.gibatekpro.exchange_rate_app_springboot.ExchangeRateAppS
+ pringbootApplication
+

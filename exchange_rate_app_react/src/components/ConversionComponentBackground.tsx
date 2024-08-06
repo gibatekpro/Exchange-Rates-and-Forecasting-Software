@@ -1,6 +1,5 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
-import ConversionComponent from "./ConversionComponent";
 
 const ConversionComponentBackground = () => {
     const designBorder = {

@@ -12,7 +12,6 @@ import {HomePage} from "./pages/HomePage";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import FirebaseAuthUI from "./pages/auth/FirebaseAuthUI";
 import {RegisterPage} from "./pages/auth/RegisterPage";
 import {LoginPage} from "./pages/auth/LoginPage";
 import {RequireAuth} from "./services/auth_guard/RequireAuth";

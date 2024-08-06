@@ -101,7 +101,11 @@ const RatesComponent:React.FC<RatesComponentProps> = (
                             <Card style={{
                                 ...cardWidth
                             }}>
-                                <Card.Header as="h4">
+                                <Card.Header as="h4" style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
                                     {conversionData.query.from} to {conversionData.query.to}
                                 </Card.Header>
                                 <Card.Body>
@@ -130,7 +134,11 @@ const RatesComponent:React.FC<RatesComponentProps> = (
                             <Card style={{
                                 ...cardWidth
                             }}>
-                                <Card.Header as="h4">
+                                <Card.Header as="h4" style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
                                     {conversionData.query.to} to {conversionData.query.from}
                                 </Card.Header>
                                 <Card.Body>

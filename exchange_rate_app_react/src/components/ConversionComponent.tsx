@@ -7,10 +7,12 @@ import * as Yup from "yup";
 import FormValue from "../model/FormValue";
 import CustomDatePicker from "./custom_datepicker/CustomDatePicker";
 import * as util from "node:util";
-import {Util} from "../util/utils";
+import {getFieldValue, Util} from "../util/utils";
 import {ConversionApiResponse} from "../model/ConversionApiResponse";
 import {Option} from "react-bootstrap-typeahead/types/types";
 import formValue from "../model/FormValue";
+import backgroundImage from "../assets/images/backgroundImage.jpg";
+import backgroundImage2 from "../assets/images/backgroundImage2.jpg";
 
 // Initial state value
 const initialConversionData: ConversionApiResponse = {
@@ -61,7 +63,6 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
         initialValues: initialValues,
         onSubmit: values => {
 
-            console.log(JSON.stringify(values) + ">>>>>>>>>>>>>>>")
             submitForm(values);
         },
     });
@@ -150,17 +151,6 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
         return num;
     }
 
-    function getFieldValue(selected: Option[]): any {
-        if (selected.length > 0) {
-            return selected.map(option => {
-                const jsonOption = JSON.stringify(option);
-                const parsedOption = JSON.parse(jsonOption);
-                return parsedOption.value;
-            })[0];
-        }
-        return '';
-    }
-
     const handleIconClick = () => {
         const tempSelection = fromSelection;
 
@@ -189,6 +179,9 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
                 <Row style={{
                     backgroundColor: 'blue',
                     height: '300px',
+                    backgroundImage: `url(${backgroundImage2})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                     ...designBorder
                 }}>
                     {/* Content of the first row */}
@@ -424,8 +417,7 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
                                                 <div style={{
                                                     ...designBorder,
                                                 }}>
-                                                    1 {conversionData.query.from} =
-                                                    {formatCurrencyInput(conversionData.info.rate.toString())} {conversionData.query.to}
+                                                    1 {conversionData.query.from} = {formatCurrencyInput(conversionData.info.rate.toString())} {conversionData.query.to}
                                                 </div>
                                             </Row>
                                             <Row>
@@ -455,8 +447,8 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
                                             ...designBorder,
                                         }}>
                                             <Button type="submit" variant="primary" size="sm" style={{
-                                                flex: 1,  // Makes the button expand to fill all available space
-                                                width: '100%' // Ensures the button stretches to full width
+                                                flex: 1,
+                                                width: '100%'
                                             }}>
                                                 Convert
                                             </Button>{' '}

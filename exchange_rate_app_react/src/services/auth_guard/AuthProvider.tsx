@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import {useNavigate} from 'react-router-dom';
 import {Util} from "../../util/utils";
+import {bool} from "yup";
 
 //The shape of the auth context value was defined
 interface AuthContextType {
@@ -18,7 +19,7 @@ interface AuthContextType {
     token: string | null;
     login: (email: string, password: string, callback: (user: string) => void) => Promise<void>;
     resetPassword: (email: string, callback: (message: string) => void) => Promise<void>;
-    register: (firstName: string, lastName: string, email: string, password: string, callback: (user: string) => void) => Promise<void>;
+    register: (firstName: string, lastName: string, email: string, password: string, callback: (user: string, failed: boolean) => void) => Promise<void>;
     logout: () => void;
 }
 
@@ -99,7 +100,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const register = async (firstName: string, lastName: string, email: string, password: string, callback: (user: string) => void) => {
+    const register = async (firstName: string, lastName: string, email: string, password: string, callback: (user: string, failed: boolean) => void) => {
         //register function is used to create a new user
         try {
             const auth = getAuth();
@@ -125,11 +126,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
                 if (response.ok) {
                     console.log(response);
-                    callback("Registration Successful.");
+                    callback("Registration Successful.", false);
                 } else {
                     await deleteAccount(message => {
                         //Delete the user from firebase if it fails to save in back end
-                        callback(message)
+                        callback(message, true)
 
                     })
                     console.log(response)
@@ -137,7 +138,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             } catch (error: any) {
                 await deleteAccount(message => {
                     //Delete the user from firebase if it fails to save in back end
-                    callback(message)
+                    callback(message, true)
 
                 })
                 console.error("Registration Error:", error.message);
@@ -145,7 +146,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         } catch (error) {
             await deleteAccount(message => {
                 //Delete the user from firebase if it fails to save in back end
-                callback(message)
+                callback(message, true)
 
             })
             console.error("Register Error: ", error);

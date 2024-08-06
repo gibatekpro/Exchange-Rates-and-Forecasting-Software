@@ -14,6 +14,7 @@ import java.util.Map;
         "startDate",
         "endDate",
         "base",
+        "to",
         "rates"
 })
 public class TimeSeriesApiResponse {
@@ -30,6 +31,8 @@ public class TimeSeriesApiResponse {
     private String endDate;
 
     private String base;
+
+    private String to;
 
     private Map<String, Map<String, Double>> rates;
 

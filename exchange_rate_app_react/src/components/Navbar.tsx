@@ -1,8 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAuth} from "../services/auth_guard/AuthProvider";
+import {appName} from "../util/utils";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 
 const Navbar = () => {
+    const [loggedIn, setLogedIn] = useState<boolean>(false)
     let auth = useAuth();
+
+    useEffect(() => {
+        //useEffect is used to handle side effects
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            //onAuthStateChanged listens for changes in the user's sign-in state
+            if (user) {
+                const token = await user.getIdToken();
+                setLogedIn(true)
+            } else {
+                setLogedIn(false)
+            }
+        });
+
+        //cleanup function to unsubscribe from onAuthStateChanged
+        return () => unsubscribe();
+    }, []);
+
 
     const performLogout = () => {
 
@@ -14,7 +35,7 @@ const Navbar = () => {
         <div>
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-light">
                 <div className="container-fluid">
-                    <a className="logo mx-3" href="/">ShopVerse</a>
+                    <a className="logo mx-3" href="/">{appName}</a>
                     <div className="d-flex ">
                         <div className=" navbar-toggler mb-1 mb-md-0 ms-md-0 me-2  align-items-end justify-content-end">
                             <a className="Icon fw-normal nav-link" href="/cart-details">
@@ -46,28 +67,7 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <a className="Text black fw-bold nav-link" href="/protected">About</a>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="Text black nav-link dropdown-toggle"
-                                   data-bs-toggle="dropdown"
-                                   type="button"
-                                   aria-expanded="false">Categories</a>
-                                <ul className="dropdown-menu">
-                                    item
-                                </ul>
-                            </li>
-                            <li className="nav-item">
-                                <a className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
-                                   type="button"
-                                   onClick={performLogout}>
-                                    Logout</a>
-                            </li>
                         </ul>
-
-                        {/*<form className="d-flex" role="search">*/}
-                        {/*    <input className="form-control me-2" type="search" placeholder="Search"*/}
-                        {/*           aria-label="Search"/>*/}
-                        {/*    <button className="outline-button" type="submit">Search</button>*/}
-                        {/*</form>*/}
                         <ul className="navbar-nav d-flex mb-2 me-5 mb-md-0 ms-md-5">
                             <li className="nav-item" hidden={true}>
                                 <a className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
@@ -79,24 +79,14 @@ const Navbar = () => {
                                     </svg>
                                     Hi Tony</a>
                             </li>
-                            <li className="d-none d-sm-none d-md-block d-lg-block nav-item">
-                                <a className="Icon fw-normal nav-link" href="/cart-details">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         className="bi-cart" viewBox="0 0 16 16">
-                                        <path
-                                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                                    </svg>
-                                    5
-                                </a>
-                            </li>
-                            <li className="nav-item" hidden={true}>
+                            <li className="nav-item" hidden={!loggedIn}>
                                 <a className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
                                    type="button"
-                                   //TODO: onClick={}
+                                   onClick={performLogout}
                                 >
                                     Logout</a>
                             </li>
-                            <li className="nav-item" hidden={false}>
+                            <li className="nav-item" hidden={loggedIn}>
                                 <a
                                     className="Icon fw-normal Text blue fw-bold nav-link" aria-current="page"
                                     href="/login" type="button"

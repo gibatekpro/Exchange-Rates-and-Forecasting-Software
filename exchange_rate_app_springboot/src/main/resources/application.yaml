@@ -2,7 +2,7 @@ server:
   port: 3031
 
 allowed:
-  origins: http://localhost:3001
+  origins: http://localhost:3000
 
 external:
   access-key: bb7e43d9fe8d02373228c2c8f5490b28
@@ -54,3 +54,5 @@ logging:
   level:
     root: "info"
     com.example.demo: DEBUG
+
+#  Testing ignore

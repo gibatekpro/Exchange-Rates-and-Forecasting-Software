@@ -1,3 +1,6 @@
+import exp from "node:constants";
+import {Option} from "react-bootstrap-typeahead/types/types";
+
 export const Util = {
     apiUrl: 'http://localhost:3031/api/v1/',
     baseUrl: 'http://localhost:3031/api/v1/',
@@ -18,3 +21,16 @@ export const firebaseConfig = {
     appId: "1:484213195051:web:e16da4064e65039d73856e",
     measurementId: "G-DCT3RY88QJ"
 };
+
+export function getFieldValue(selected: Option[]): any {
+    if (selected.length > 0) {
+        return selected.map(option => {
+            const jsonOption = JSON.stringify(option);
+            const parsedOption = JSON.parse(jsonOption);
+            return parsedOption.value;
+        })[0];
+    }
+    return '';
+}
+
+export const appName: string = "Exchange R";

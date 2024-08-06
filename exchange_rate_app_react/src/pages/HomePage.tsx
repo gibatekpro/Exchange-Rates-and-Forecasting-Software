@@ -5,8 +5,10 @@ import FormValue from "../model/FormValue";
 import {ConversionApiResponse} from "../model/ConversionApiResponse";
 import {Option} from "react-bootstrap-typeahead/types/types";
 import {useFormik} from "formik";
-import {Util} from "../util/utils";
+import {getFieldValue, Util} from "../util/utils";
 import ConversionComponent from "../components/ConversionComponent";
+import {TimeSeriesComponent} from "../components/TimeSeriesComponent";
+import {TimeSeriesApiResponse} from "../model/TimeSeriesApiResponse";
 
 // Initial state value
 const initialConversionData: ConversionApiResponse = {
@@ -40,8 +42,11 @@ export const HomePage: React.FC = () => {
     const [options, setOptions] = useState([] as Option[]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [conversionData, setConversionData] = React.useState(initialConversionData)
+    const [timeSeriesData, setTimeSeriesData] = React.useState<TimeSeriesApiResponse>()
+    const [timeSeriesLength, setTimeSeriesLength] = React.useState<number>(7)
     const conversionUrl: string = `${Util.apiUrl}rates/convert`;
     const currencyListUrl: string = `${Util.apiUrl}rates/currency-list`;
+    const timeSeriesUrl: string = `${Util.apiUrl}rates/time-series`;
 
     //Fetches the currency list
     useEffect(() => {
@@ -65,10 +70,6 @@ export const HomePage: React.FC = () => {
 
         const fetchInitialConversion = async () => {
 
-            // setIsLoading(true)
-            // setFromSelection(getSpecialFieldValue(options, "USD"));
-            // setToSelection(getSpecialFieldValue(options, "USD"));
-
             try {
                 //Query params
                 const queryParams = new URLSearchParams({
@@ -83,9 +84,7 @@ export const HomePage: React.FC = () => {
 
                 if (data.success) {
                     //Handles the successful response
-                    console.log('Conversion data:', data);
                     setConversionData(data as ConversionApiResponse)
-                    console.log(conversionData)
                 } else {
                     console.error('Failed to fetch conversion:', data);
                 }
@@ -97,9 +96,84 @@ export const HomePage: React.FC = () => {
 
         }
 
+        const fetchInitialTimeSeriesData = async () => {
+
+            try {
+                //Calculates the start date (7 days ago) and end date (today)
+                const endDate = new Date();
+                const startDate = new Date(endDate);
+                startDate.setDate(endDate.getDate() - timeSeriesLength);
+                //Query params
+                const queryParams = new URLSearchParams({
+                    from: "GBP",
+                    to: "USD",
+                    startDate: startDate.toISOString().split('T')[0], // Formats the current date as YYYY-MM-DD
+                    endDate: endDate.toISOString().split('T')[0] // Formats the current date as YYYY-MM-DD
+                });
+
+                const response = await fetch(`${timeSeriesUrl}?${queryParams}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    //Handles the successful response
+                    setTimeSeriesData(data as TimeSeriesApiResponse)
+                } else {
+                    console.error('Failed to fetch time series:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching time series:', error);
+            } finally {
+                setIsLoading(false)
+            }
+
+        }
+
         fetchCurrencies();
         fetchInitialConversion();
+        fetchInitialTimeSeriesData();
+
     }, [currencyListUrl]);
+
+
+    useEffect(() => {
+        const fetchTimeSeriesData = async () => {
+            if (conversionData && conversionData.date) {
+                //Calculates the start date (7 days ago) and end date (today)
+                const endDate = new Date(conversionData.date);
+                const startDate = new Date(endDate);
+                startDate.setDate(endDate.getDate() - timeSeriesLength);
+
+                console.log("Start Date: ==" + startDate);
+                console.log("End Date: ==" + endDate);
+
+                try {
+                    //Query params
+                    const queryParams = new URLSearchParams({
+                        from: getFieldValue(fromSelection),
+                        to: getFieldValue(toSelection),
+                        startDate: startDate.toISOString().split('T')[0], // Formats the current date as YYYY-MM-DD
+                        endDate: endDate.toISOString().split('T')[0] // Formats the current date as YYYY-MM-DD
+                    });
+
+                    const response = await fetch(`${timeSeriesUrl}?${queryParams}`);
+                    const data = await response.json();
+
+                    if (data.success) {
+                        //Handles the successful response
+                        setTimeSeriesData(data as TimeSeriesApiResponse);
+                    } else {
+                        console.error('Failed to fetch time series:', data);
+                    }
+                } catch (error) {
+                    console.error('Error fetching time series:', error);
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        }
+
+        fetchTimeSeriesData();
+    }, [conversionData, timeSeriesLength]);
 
 
     const submitForm = (values: FormValue) => {
@@ -127,9 +201,7 @@ export const HomePage: React.FC = () => {
 
                 if (data.success) {
                     //Handles the successful response
-                    console.log('Conversion data:', data);
                     setConversionData(data as ConversionApiResponse)
-                    console.log(conversionData)
                 } else {
                     console.error('Failed to fetch conversion:', data);
                 }
@@ -161,6 +233,8 @@ export const HomePage: React.FC = () => {
                     minHeight: "400px",
                 }}>
                 </div>
+                {timeSeriesData &&
+                    <TimeSeriesComponent timeSeriesData={timeSeriesData} conversionData={conversionData} timeSeriesLength={timeSeriesLength} setTimeSeriesLength={setTimeSeriesLength}/>}
                 <RatesComponent
                     conversionData={conversionData}/>
             </div>

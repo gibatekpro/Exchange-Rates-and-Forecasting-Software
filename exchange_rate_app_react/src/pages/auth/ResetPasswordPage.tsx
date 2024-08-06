@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+import {appName} from "../../util/utils";
 
 export const ResetPasswordPage: React.FC = () => {
     window.scroll(0, 0);
@@ -78,7 +79,7 @@ export const ResetPasswordPage: React.FC = () => {
                                   borderRadius: "8px",
                                   backgroundColor: "#fff"
                               }} className="bg-body-tertiary">
-                            <a className="logo text-center fs-3" href="/public">ShopVerse</a>
+                            <a className="logo text-center fs-3" href="/public">{appName}</a>
                             <hr/>
                             <h6 className="text-center mt-2">Reset Password</h6>
                             <hr className="mb-5"/>
