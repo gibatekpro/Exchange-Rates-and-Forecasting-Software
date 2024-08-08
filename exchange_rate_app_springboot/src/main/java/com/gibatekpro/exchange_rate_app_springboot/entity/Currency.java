@@ -31,10 +31,12 @@ public class Currency {
 
     //One-to-Many relationship with CurrencyConversion where this Currency is the base currency
     @OneToMany(mappedBy = "baseCurrency")
+    @Builder.Default
     private Set<CurrencyConversion> baseCurrencyConversions = new HashSet<>();
 
     //One-to-Many relationship with CurrencyConversion where this Currency is the to currency
     @OneToMany(mappedBy = "toCurrency")
+    @Builder.Default
     private Set<CurrencyConversion> toCurrencyConversions = new HashSet<>();
 
     @Override

@@ -1,4 +1,4 @@
-package com.gibatekpro.exchange_rate_app_springboot.controller;
+package com.gibatekpro.exchange_rate_app_springboot.controller.rest;
 
 import com.gibatekpro.exchange_rate_app_springboot.model.RegisterRequestBody;
 import com.gibatekpro.exchange_rate_app_springboot.service.AuthService;

@@ -1,7 +1,5 @@
 package com.gibatekpro.exchange_rate_app_springboot.config.security;
 
-import com.gibatekpro.exchange_rate_app_springboot.config.app.ApplicationConfig;
-import com.gibatekpro.exchange_rate_app_springboot.repo.UserRepo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -11,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -32,13 +32,13 @@ public class ExternalGetRateService {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
-    //This method will be called immediately after the server starts
-    @PostConstruct
-    @Transactional
-    public void init() {
-        logger.info("Initializing GetRateService");
-        fetchAndSaveCurrencies();
-    }
+    //This method will be called immediately after the server starts TODO:
+//    @PostConstruct
+//    @Transactional
+//    public void init() {
+//        logger.info("Initializing GetRateService");
+//        fetchAndSaveCurrencies();
+//    }
 
 
 //    @Scheduled(fixedRate = 3600000) // Every hour
