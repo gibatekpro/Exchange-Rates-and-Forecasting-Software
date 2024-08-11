@@ -10,6 +10,7 @@ import com.gibatekpro.exchange_rate_app_springboot.repo.CurrencyConversionRepo;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.common.returnsreceiver.qual.This;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,12 +34,12 @@ public class ExternalGetRateService {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     //This method will be called immediately after the server starts TODO:
-//    @PostConstruct
-//    @Transactional
-//    public void init() {
-//        logger.info("Initializing GetRateService");
-//        fetchAndSaveCurrencies();
-//    }
+    @PostConstruct
+    @Transactional
+    public void init() {
+        logger.info("Initializing GetRateService");
+        fetchAndSaveCurrencies();
+    }
 
 
 //    @Scheduled(fixedRate = 3600000) // Every hour

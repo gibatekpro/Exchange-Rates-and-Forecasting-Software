@@ -8,17 +8,43 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            VStack {
+                if authViewModel.user != nil {
+                    Button(action: authViewModel.logout) {
+                        Text("Log Out")
+                            .font(Font.system(size: 20, weight: .bold))
+                            .foregroundColor(Color.black)
+                            .padding(10)
+                            .frame(width: UIScreen.main.bounds.width - 53)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color.white)
+                            )
+                    }
+                }else {
+                    NavigationLink(destination: LoginView()) {
+                        Text("Log In")
+                            .font(Font.system(size: 20, weight: .bold))
+                            .foregroundColor(Color.black)
+                            .padding(10)
+                            .frame(width: UIScreen.main.bounds.width - 53)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color.white)
+                            )
+                    }
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthViewModel())
 }
