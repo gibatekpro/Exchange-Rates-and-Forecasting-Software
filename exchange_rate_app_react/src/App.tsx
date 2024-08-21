@@ -17,6 +17,7 @@ import {LoginPage} from "./pages/auth/LoginPage";
 import {RequireAuth} from "./services/auth_guard/RequireAuth";
 import {ProtectedPage} from "./pages/ProtectedPage";
 import {ResetPasswordPage} from "./pages/auth/ResetPasswordPage";
+import {ForecastPage} from "./pages/ForecastPage";
 
 
 const app = initializeApp(firebaseConfig);
@@ -36,6 +37,7 @@ function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/reset-password" element={<ResetPasswordPage />} />
+                        <Route path="/forecast" element={<ForecastPage />} />
                         <Route path="/protected"
                                element={
                                    <RequireAuth>

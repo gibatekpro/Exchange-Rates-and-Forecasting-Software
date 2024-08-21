@@ -122,13 +122,6 @@ public class ConversionServiceImpl implements ConversionService {
     @Override
     @Transactional
     public TimeSeriesApiResponse fetchTimeSeriesConversion(String from, String to, LocalDate startDate, LocalDate endDate) {
-        //Fetches the base currency from the repository
-        Currency baseCurrency = currencyRepo.findByCurrencyCode(from)
-                .orElseThrow(() -> new RuntimeException("Base currency not found: " + from));
-
-        //Fetches the to-currency from the repository
-        Currency toCurrency = toCurrencyRepo.findByCurrencyCode(to)
-                .orElseThrow(() -> new RuntimeException("To currency not found: " + to));
 
         //Initializes the response object
         TimeSeriesApiResponse response = new TimeSeriesApiResponse();
@@ -138,7 +131,8 @@ public class ConversionServiceImpl implements ConversionService {
         response.setEndDate(endDate.toString());
         response.setBase(from);
         response.setTo(to);
-        Map<String, Map<String, Double>> rates = new LinkedHashMap<>(); // Use LinkedHashMap to maintain order
+        //LinkedHashMap maintains order
+        Map<String, Map<String, Double>> rates = new LinkedHashMap<>();
 
         //Loops through each date from start date to end date
         LocalDate currentDate = startDate;
@@ -156,7 +150,16 @@ public class ConversionServiceImpl implements ConversionService {
             ConversionApiResponse apiResponse = restTemplate.getForObject(url, ConversionApiResponse.class);
 
             if (apiResponse != null && apiResponse.isSuccess()) {
-                rates.computeIfAbsent(currentDate.toString(), k -> new LinkedHashMap<>()).put(to, apiResponse.getInfo().getRate());
+                String dateKey = currentDate.toString();
+
+                if (!rates.containsKey(dateKey)) {
+                    rates.put(dateKey, new LinkedHashMap<>());
+                }
+
+                // Retrieve the LinkedHashMap corresponding to the date key
+                Map<String, Double> dailyRates = rates.get(dateKey);
+
+                dailyRates.put(to, apiResponse.getInfo().getRate());
             }
 
             //Moves to the next date

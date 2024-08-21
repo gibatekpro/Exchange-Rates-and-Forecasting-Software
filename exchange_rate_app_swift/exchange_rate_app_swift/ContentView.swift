@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var conversionViewModel = ConversionViewModel()
     
     var body: some View {
         NavigationView {

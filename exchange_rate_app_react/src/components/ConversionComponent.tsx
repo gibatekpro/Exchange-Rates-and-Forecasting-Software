@@ -59,8 +59,24 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
         setFromSelection
     }) => {
     const [hover, setHover] = React.useState(false);
+
+    const today = new Date(); // Current date
+    const minDate = new Date('1970-01-01'); // Set minimum date to January 1, 1970
+
+    const ConversionSchema = Yup.object().shape({
+        amount: Yup.number()
+            .min(1, 'Amount must be at least 1')
+            .max(1000000000000000000, 'Amount is too large')
+            .required('Amount is required'),
+        date: Yup.date()
+            .required('Required')
+            .max(today, 'Date cannot be in the future')
+            .min(minDate, 'Date cannot be before January 1, 1970')
+    });
+
     const {setFieldValue, values, errors, touched, handleSubmit, handleChange} = useFormik({
         initialValues: initialValues,
+        validationSchema: ConversionSchema,
         onSubmit: values => {
 
             submitForm(values);
@@ -70,14 +86,14 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
     //Fetches the currency list
     useEffect(() => {
 
-        // Find the option with the label containing "USD"
+        //Finds the option with the label containing "USD"
         const usdOption = options.find(option => (option as any).label.includes("USD"));
         if (usdOption) {
             setToSelection([usdOption]);
             setFieldValue('toCurrency', (usdOption as any).value)
         }
 
-        // Find the option with the label containing "GBP"
+        //Finds the option with the label containing "GBP"
         const gbpOption = options.find(option => (option as any).label.includes("GBP"));
         if (gbpOption) {
             setFromSelection([gbpOption]);
@@ -110,20 +126,6 @@ const ConversionComponent: React.FC<ConversionComponentProps> = (
         // border: '1px solid black',
         // border: 'none',
     };
-
-    const today = new Date(); // Current date
-    const minDate = new Date('1970-01-01'); // Set minimum date to January 1, 1970
-
-    const ConversionSchema = Yup.object().shape({
-        amount: Yup.string()
-            .min(1, 'Too Short!')
-            .max(25, 'Too Long!')
-            .required('Required'),
-        date: Yup.date()
-            .required('Required')
-            .max(today, 'Date cannot be in the future')
-            .min(minDate, 'Date cannot be before January 1, 1970')
-    });
 
     function formatCurrencyInput(value: string): string {
         //Removes all non-numeric characters except the decimal point

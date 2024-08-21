@@ -1,10 +1,11 @@
-import exp from "node:constants";
+
 import {Option} from "react-bootstrap-typeahead/types/types";
 
+const baseUrlDev: string = 'http://localhost:3031';
+const baseUrlProd: string = 'https://gibatekpro.com';
+
 export const Util = {
-    apiUrl: 'http://localhost:3031/api/v1/',
-    baseUrl: 'http://localhost:3031/api/v1/',
-    stripeKey: 'pk_test_51N5XrvG4mCGEpPxu7qpEIfRNYKHwzzoA2ZmAYQeYX3evd6qXwFPzK8OT5f4kspvLyfw91k737pZ62JMFHrmjUYRF00wwqOxI6R',
+    apiUrl: `${baseUrlDev}/api/v1/`,
     googleMapApiKey: 'AIzaSyDSjUFexb8QOXq3py5QRGUOYY6J-mVjFPE'
 };
 

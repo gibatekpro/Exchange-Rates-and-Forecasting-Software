@@ -24,6 +24,7 @@
 		EA32C6CA2C693D9C00CF9A46 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6C92C693D9C00CF9A46 /* RegisterView.swift */; };
 		EA32C6CC2C69458600CF9A46 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CB2C69458600CF9A46 /* ResetPasswordView.swift */; };
 		EA32C6CE2C6981BF00CF9A46 /* ConversionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */; };
+		EA32C6D02C69862E00CF9A46 /* CurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */; };
 		EA5D86CE2C2F766400B7291E /* exchange_rate_app_swiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */; };
 		EA5D86D02C2F766400B7291E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86CF2C2F766400B7291E /* ContentView.swift */; };
 		EA5D86D22C2F766500B7291E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA5D86D12C2F766500B7291E /* Assets.xcassets */; };
@@ -66,6 +67,7 @@
 		EA32C6C92C693D9C00CF9A46 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		EA32C6CB2C69458600CF9A46 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionViewModel.swift; sourceTree = "<group>"; };
+		EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyOption.swift; sourceTree = "<group>"; };
 		EA5D86CA2C2F766400B7291E /* exchange_rate_app_swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exchange_rate_app_swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchange_rate_app_swiftApp.swift; sourceTree = "<group>"; };
 		EA5D86CF2C2F766400B7291E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				EA32C6AA2C6904D700CF9A46 /* ConversionApiResponse.swift */,
 				EA32C6AC2C6904F800CF9A46 /* TimeSeriesApiResponse.swift */,
 				EA32C6AE2C69050500CF9A46 /* FormValue.swift */,
+				EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				EA32C6C62C69324B00CF9A46 /* Spinner.swift in Sources */,
 				EA32C6A42C68FF9000CF9A46 /* ColorManager.swift in Sources */,
 				EA32C6CE2C6981BF00CF9A46 /* ConversionViewModel.swift in Sources */,
+				EA32C6D02C69862E00CF9A46 /* CurrencyOption.swift in Sources */,
 				EA32C6CA2C693D9C00CF9A46 /* RegisterView.swift in Sources */,
 				EA32C6CC2C69458600CF9A46 /* ResetPasswordView.swift in Sources */,
 				EA32C6AB2C6904D700CF9A46 /* ConversionApiResponse.swift in Sources */,

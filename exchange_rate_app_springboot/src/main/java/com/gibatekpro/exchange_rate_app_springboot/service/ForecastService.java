@@ -1,0 +1,14 @@
+package com.gibatekpro.exchange_rate_app_springboot.service;
+
+import com.gibatekpro.exchange_rate_app_springboot.model.ForecastApiResponse;
+import com.gibatekpro.exchange_rate_app_springboot.model.ForecastRequestBody;
+
+public interface ForecastService {
+
+ForecastApiResponse getForecastFromExponentialMovingAverage(ForecastRequestBody forecastRequestBody);
+
+ForecastApiResponse getForecastFromSimpleMovingAverage(ForecastRequestBody forecastRequestBody);
+
+ForecastApiResponse getForecastFromLeastSquare(ForecastRequestBody forecastRequestBody);
+
+}

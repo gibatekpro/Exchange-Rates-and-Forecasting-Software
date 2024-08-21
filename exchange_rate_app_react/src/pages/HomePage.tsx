@@ -41,7 +41,7 @@ export const HomePage: React.FC = () => {
     });
     const [options, setOptions] = useState([] as Option[]);
     const [isLoading, setIsLoading] = React.useState(false);
-    const [conversionData, setConversionData] = React.useState(initialConversionData)
+    const [conversionData, setConversionData] = React.useState(initialConversionData);
     const [timeSeriesData, setTimeSeriesData] = React.useState<TimeSeriesApiResponse>()
     const [timeSeriesLength, setTimeSeriesLength] = React.useState<number>(7)
     const conversionUrl: string = `${Util.apiUrl}rates/convert`;
@@ -234,7 +234,11 @@ export const HomePage: React.FC = () => {
                 }}>
                 </div>
                 {timeSeriesData &&
-                    <TimeSeriesComponent timeSeriesData={timeSeriesData} conversionData={conversionData} timeSeriesLength={timeSeriesLength} setTimeSeriesLength={setTimeSeriesLength}/>}
+                    <TimeSeriesComponent
+                        timeSeriesData={timeSeriesData}
+                        conversionData={conversionData}
+                        timeSeriesLength={timeSeriesLength}
+                        setTimeSeriesLength={setTimeSeriesLength}/>}
                 <RatesComponent
                     conversionData={conversionData}/>
             </div>

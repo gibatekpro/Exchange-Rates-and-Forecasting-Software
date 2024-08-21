@@ -65,7 +65,7 @@ const Navbar = () => {
                                 <a className="Text black fw-bold nav-link" aria-current="page" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="Text black fw-bold nav-link" href="/protected">About</a>
+                                <a className="Text black fw-bold nav-link" href="/forecast">Forecast</a>
                             </li>
                         </ul>
                         <ul className="navbar-nav d-flex mb-2 me-5 mb-md-0 ms-md-5">

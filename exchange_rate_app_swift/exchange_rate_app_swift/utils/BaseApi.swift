@@ -11,7 +11,7 @@ import Foundation
 
 struct BaseApi {
     static let baseUrlDev: String = "http://localhost:3031"
-    static let baseUrlProd: String = "gibatekpro.com"
+    static let baseUrlProd: String = "https://gibatekpro.com"
     static let apiUrl: String = baseUrlProd + "/api/v1/"
 }
 

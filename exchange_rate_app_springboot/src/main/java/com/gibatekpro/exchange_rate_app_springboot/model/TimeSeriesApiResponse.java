@@ -36,4 +36,17 @@ public class TimeSeriesApiResponse {
 
     private Map<String, Map<String, Double>> rates;
 
+    @Override
+    public String toString() {
+        return "TimeSeriesApiResponse{" +
+                "success=" + success +
+                ", timeSeries=" + timeSeries +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", base='" + base + '\'' +
+                ", to='" + to + '\'' +
+                ", rates=" + rates +
+                '}';
+    }
+
 }
