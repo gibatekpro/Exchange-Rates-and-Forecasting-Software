@@ -9,6 +9,7 @@ import {getFieldValue, Util} from "../util/utils";
 import ConversionComponent from "../components/ConversionComponent";
 import {TimeSeriesComponent} from "../components/TimeSeriesComponent";
 import {TimeSeriesApiResponse} from "../model/TimeSeriesApiResponse";
+import moment from "moment/moment";
 
 // Initial state value
 const initialConversionData: ConversionApiResponse = {
@@ -37,7 +38,7 @@ export const HomePage: React.FC = () => {
         amount: 1,
         fromCurrency: '',
         toCurrency: '',
-        date: new Date().toISOString().split('T')[0]
+        date: moment().format('YYYY-MM-DD')
     });
     const [options, setOptions] = useState([] as Option[]);
     const [isLoading, setIsLoading] = React.useState(false);

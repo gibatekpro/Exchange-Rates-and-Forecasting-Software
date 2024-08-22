@@ -45,7 +45,7 @@ public class ForecastServiceImpl implements ForecastService {
 
 
         //Fetches the days for the time-series
-        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(10);
+        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(9);
         LocalDate previousEndDate = forecastRequestBody.getStartDate().minusDays(0);
         //Fetches the time-series data for the previous 10 days
         TimeSeriesApiResponse previousTimeSeriesResponse = conversionService.fetchTimeSeriesConversion(
@@ -72,7 +72,7 @@ public class ForecastServiceImpl implements ForecastService {
         int smoothingPeriod = 10;
         double smoothingFactor = 2.0 / (smoothingPeriod + 1);
         LocalDate currentDateBeingCalculated = forecastRequestBody.getStartDate();
-        int checkCount = 0;
+//        int checkCount = 0;
 
         while (!currentDateBeingCalculated.isAfter(forecastRequestBody.getEndDate())) {
 
@@ -109,15 +109,21 @@ public class ForecastServiceImpl implements ForecastService {
 
             emaToday = ((valueToday * smoothingFactor) + (emaPrevious * (1 - smoothingFactor)));
 
+
+//            logger.info("xxxxxxxxxxxx Smoothing Factor: " + checkCount + ": " +smoothingFactor);
+//            logger.info("xxxxxxxxxxxx Price Today: " + checkCount + ": " +valueToday);
+//            logger.info("xxxxxxxxxxxx Ema Previous: " + checkCount + ": " +emaPrevious);
+//            logger.info("xxxxxxxxxxxx Ema Today: " + checkCount + ": " +emaToday);
+
+
             emaPrevious = emaToday;
 
-            checkCount++;
+//            checkCount++;
 
             //Now, the ema rates are being stored
             Map<String, Double> rateMap = new LinkedHashMap<>();
             rateMap.put(forecastRequestBody.getForecastCurrency(), emaToday);
             emaRates.put(currentDateBeingCalculated.toString(), rateMap);
-
 
             currentDateBeingCalculated = currentDateBeingCalculated.plusDays(1);
         }
@@ -140,7 +146,7 @@ public class ForecastServiceImpl implements ForecastService {
     @Transactional
     public ForecastApiResponse getForecastFromSimpleMovingAverage(ForecastRequestBody forecastRequestBody) {
         //Fetches the previous 10 days for the time-series data
-        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(10);
+        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(9);
         LocalDate previousEndDate = forecastRequestBody.getStartDate().minusDays(0);
 
         //Fetches the time-series data for the previous 10 days
@@ -178,6 +184,8 @@ public class ForecastServiceImpl implements ForecastService {
             currentWindow.remove(0);
             currentWindow.add(smaToday);
 
+
+
             currentDateBeingCalculated = currentDateBeingCalculated.plusDays(1);
         }
 
@@ -200,7 +208,81 @@ public class ForecastServiceImpl implements ForecastService {
     @Override
     @Transactional
     public ForecastApiResponse getForecastFromLeastSquare(ForecastRequestBody forecastRequestBody) {
-        return null;
+        //Fetches the previous 10 days for the time-series data
+        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(9);
+        LocalDate previousEndDate = forecastRequestBody.getStartDate().minusDays(0);
+
+        //Fetches the time-series data for the previous 10 days
+        TimeSeriesApiResponse previousTimeSeriesResponse = conversionService.fetchTimeSeriesConversion(
+                forecastRequestBody.getBaseCurrency(),
+                forecastRequestBody.getForecastCurrency(),
+                previousStartDate,
+                previousEndDate
+        );
+
+        //Creates the Least Square Forecast data
+        ForecastApiResponse response = createLeastSquareForecastData(forecastRequestBody, previousTimeSeriesResponse);
+
+        return response;
     }
+
+    private ForecastApiResponse createLeastSquareForecastData(ForecastRequestBody forecastRequestBody, TimeSeriesApiResponse previousTimeSeriesResponse) {
+        //Initialize the Least Square calculation
+        Map<String, Map<String, Double>> leastSquareRates = new LinkedHashMap<>();
+        List<Double> yValues = previousTimeSeriesResponse.getRates().values().stream()
+                .map(map -> map.get(forecastRequestBody.getForecastCurrency()))
+                .collect(Collectors.toList());
+
+        int n = yValues.size();
+        double sumX = 0.0;
+        double sumY = 0.0;
+        double sumXY = 0.0;
+        double sumXX = 0.0;
+
+        for (int i = 0; i < n; i++) {
+            double x = i + 1;
+            double y = yValues.get(i);
+
+            sumX += x;
+            sumY += y;
+            sumXY += x * y;
+            sumXX += x * x;
+        }
+
+        // Calculating the slope (m) and intercept (c) for the line y = mx + c
+        double m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+        double c = (sumY - m * sumX) / n;
+
+        LocalDate currentDateBeingCalculated = forecastRequestBody.getStartDate();
+        int dayIndex = n + 1;
+
+        while (!currentDateBeingCalculated.isAfter(forecastRequestBody.getEndDate())) {
+            //Calculate the forecast using the line equation y = mx + c
+            double forecastValue = m * dayIndex + c;
+
+            Map<String, Double> rateMap = new LinkedHashMap<>();
+            rateMap.put(forecastRequestBody.getForecastCurrency(), forecastValue);
+            leastSquareRates.put(currentDateBeingCalculated.toString(), rateMap);
+
+            dayIndex++;
+            currentDateBeingCalculated = currentDateBeingCalculated.plusDays(1);
+        }
+
+        //Remove today's forecast, it is not needed
+        leastSquareRates.remove(previousTimeSeriesResponse.getEndDate());
+
+        //Constructing the response
+        ForecastApiResponse response = new ForecastApiResponse();
+        response.setSuccess(true);
+        response.setTimeSeries(true);
+        response.setStartDate(forecastRequestBody.getStartDate().toString());
+        response.setEndDate(forecastRequestBody.getEndDate().toString());
+        response.setBaseCurrency(forecastRequestBody.getBaseCurrency());
+        response.setForecastCurrency(forecastRequestBody.getForecastCurrency());
+        response.setRates(leastSquareRates);
+
+        return response;
+    }
+
 
 }

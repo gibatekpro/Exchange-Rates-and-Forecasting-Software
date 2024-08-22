@@ -5,7 +5,7 @@ const baseUrlDev: string = 'http://localhost:3031';
 const baseUrlProd: string = 'https://gibatekpro.com';
 
 export const Util = {
-    apiUrl: `${baseUrlDev}/api/v1/`,
+    apiUrl: `${baseUrlProd}/api/v1/`,
     googleMapApiKey: 'AIzaSyDSjUFexb8QOXq3py5QRGUOYY6J-mVjFPE'
 };
 

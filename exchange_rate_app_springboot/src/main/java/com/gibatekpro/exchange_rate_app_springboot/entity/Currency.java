@@ -1,5 +1,6 @@
 package com.gibatekpro.exchange_rate_app_springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,15 +30,25 @@ public class Currency {
     @Column(name = "currency_name", nullable = false)
     private String currencyName;
 
-    //One-to-Many relationship with CurrencyConversion where this Currency is the base currency
     @OneToMany(mappedBy = "baseCurrency")
     @Builder.Default
+    @JsonIgnore
     private Set<CurrencyConversion> baseCurrencyConversions = new HashSet<>();
 
-    //One-to-Many relationship with CurrencyConversion where this Currency is the to currency
     @OneToMany(mappedBy = "toCurrency")
     @Builder.Default
+    @JsonIgnore
     private Set<CurrencyConversion> toCurrencyConversions = new HashSet<>();
+
+    @OneToMany(mappedBy = "baseCurrency")
+    @Builder.Default
+    @JsonIgnore
+    private Set<CurrencyForecast> baseCurrencyForecast = new HashSet<>();
+
+    @OneToMany(mappedBy = "forecastCurrency")
+    @Builder.Default
+    @JsonIgnore
+    private Set<CurrencyForecast> forecastCurrencyForecast = new HashSet<>();
 
     @Override
     public int hashCode() {

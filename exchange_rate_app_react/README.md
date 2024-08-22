@@ -30,3 +30,7 @@ Firebase Authentication UI [Documentation](https://firebase.google.com/docs/web/
 Ag Charts [Documentation](https://charts.ag-grid.com/react/quick-start/)
 
 #### `npm install ag-charts-react --force`
+
+Moment JS [Documentation](https://momentjs.com/docs/)
+
+#### `npm i moment --force`

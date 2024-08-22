@@ -1,4 +1,5 @@
 import ForecastFormValue from "./ForecastFormValue";
+import moment from "moment";
 
 export class ForecastRequestBody {
     method: string;
@@ -11,10 +12,10 @@ export class ForecastRequestBody {
         this.method = values.method;
         this.baseCurrency = values.baseCurrency;
         this.forecastCurrency = values.forecastCurrency;
-        const startDateValue = new Date();
-        //Sets minimum date to tomorrow
-        startDateValue.setDate(startDateValue.getDate() + 1);
-        this.startDate = startDateValue.toISOString().split('T')[0];
+        // const startDateValue = new Date();
+        // //Sets minimum date to today
+        // startDateValue.setDate(startDateValue.getDate());
+        this.startDate = moment().format('YYYY-MM-DD')
         this.endDate = values.date;
     }
 

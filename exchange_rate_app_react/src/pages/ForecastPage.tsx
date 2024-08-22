@@ -1,24 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {getAuth} from "firebase/auth";
-import {Button, Card, Col, Container, InputGroup, Row} from "react-bootstrap";
-import backgroundImage3 from "../assets/images/backgroundImage3.webp";
-import Form from "react-bootstrap/Form";
-import {Typeahead} from "react-bootstrap-typeahead";
-import {getFieldValue, Util} from "../util/utils";
-import {useFormik} from "formik";
-import * as Yup from "yup";
+import {Util} from "../util/utils";
 import {Option} from "react-bootstrap-typeahead/types/types";
-import FormValue from "../model/FormValue";
 import ForecastFormValue from "../model/ForecastFormValue";
-import {ConversionApiResponse} from "../model/ConversionApiResponse";
-import {EmaAccordion} from "../components/forecast_models_accordion/EmaAccordion";
-import {SmaAccordion} from "../components/forecast_models_accordion/SmaAccordion";
 import {ForecastModelsExplanation} from "../components/ForecastModelsExplanation";
 import {ForecastComponent} from "../components/ForecastComponent";
 import {ForecastRequestBody} from "../model/ForecastRequestBody";
-import * as util from "node:util";
 import {ForecastApiResponse} from "../model/ForecastApiResponse";
 import {ForecastGraph} from "../components/ForecastGraph";
+import {ForecastComparisonApiResponse} from "../model/ForecastComparisonApiResponse";
+import {ForecastComparisonComponent} from "../components/ForecastComparisonComponent";
+import moment from "moment/moment";
 
 
 export const ForecastPage: React.FC = () => {
@@ -27,19 +18,14 @@ export const ForecastPage: React.FC = () => {
     const [options, setOptions] = useState([] as Option[]);
     const [isLoading, setIsLoading] = React.useState(false)
     const [forecastData, setForecastData] = useState<ForecastApiResponse>()
+    const [forecastComparisonData, setForecastComparisonData] = useState<ForecastComparisonApiResponse>()
     const forecastUrl = `${Util.apiUrl}forecast/data`
-    const today = new Date();
-    console.log(">>>> Today is " + today.toISOString().split('T')[0]);
-
-    const tomorrowDate = new Date(today);
-    tomorrowDate.setDate(today.getDate() + 1);
-    console.log(">>>> Tomorrow is " + tomorrowDate.toISOString().split('T')[0]);
-
+    const forecastComparisonUrl = `${Util.apiUrl}forecast/comparison-data`
     const [initialValues, setInitialValues] = useState<ForecastFormValue>({
         method: '',
         baseCurrency: '',
         forecastCurrency: '',
-        date: tomorrowDate.toISOString().split('T')[0]
+        date: moment().add(1,'day').format('YYYY-MM-DD')
     });
     const currencyListUrl: string = `${Util.apiUrl}rates/currency-list`;
 
@@ -63,7 +49,25 @@ export const ForecastPage: React.FC = () => {
             }
         };
 
+        const fetchForecastComparisonData = async () => {
+            try {
+                const response = await fetch(forecastComparisonUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data: ForecastComparisonApiResponse = await response.json();
+                if (data.success) {
+                    setForecastComparisonData(data);
+                    console.log(data);
+                } else {
+                    console.error('Failed to fetch comparison data:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching comparison data:', error);
+            }
+        };
         fetchCurrencies();
+        fetchForecastComparisonData();
 
     }, []);
 
@@ -111,7 +115,6 @@ export const ForecastPage: React.FC = () => {
 
     return (
         <div>
-
             <ForecastComponent submitForm={submitForm}
                                initialValues={initialValues}
                                options={options}
@@ -120,13 +123,19 @@ export const ForecastPage: React.FC = () => {
                                forecastSelection={forecastSelection}
                                setForecastSelection={setForecastSelection}
                                setBaseSelection={setBaseSelection}/>
-            {forecastData &&
+            {
+                forecastData &&
                 <ForecastGraph
                     forecastData={forecastData}
                 />
             }
             <ForecastModelsExplanation/>
-
+            {
+                forecastComparisonData &&
+                <ForecastComparisonComponent
+                    forecastComparisonData={forecastComparisonData}
+                />
+            }
         </div>
     )
 
