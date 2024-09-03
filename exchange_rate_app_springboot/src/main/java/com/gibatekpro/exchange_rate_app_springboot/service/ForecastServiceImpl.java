@@ -56,13 +56,13 @@ public class ForecastServiceImpl implements ForecastService {
         );
 
 
-        ForecastApiResponse response = createForecastData(forecastRequestBody, previousTimeSeriesResponse);
+        ForecastApiResponse response = calculateEMAForecast(forecastRequestBody, previousTimeSeriesResponse);
 
 
         return response;
     }
 
-    private ForecastApiResponse createForecastData(ForecastRequestBody forecastRequestBody, TimeSeriesApiResponse previousTimeSeriesResponse) {
+    private ForecastApiResponse calculateEMAForecast(ForecastRequestBody forecastRequestBody, TimeSeriesApiResponse previousTimeSeriesResponse) {
         //Initializes EMA calculation
         Map<String, Map<String, Double>> emaRates = new LinkedHashMap<>();
         double emaPrevious = 0.0;

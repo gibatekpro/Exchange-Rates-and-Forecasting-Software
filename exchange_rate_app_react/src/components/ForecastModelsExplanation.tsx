@@ -5,8 +5,8 @@ import {LsmAccordion} from "./forecast_models_accordion/LsmAccordion";
 
 export const ForecastModelsExplanation: React.FC = () => {
     return (
-        <section className="text-center container py-5 py-sm-5 py-md-5 py-lg-0 mt-5 mt-sm-5 mt-md-5 mt-lg-0">
-            <div className="row py-5 py-sm-5 py-md-5 py-lg-0 mt-5 mt-sm-5 mt-md-5 mt-lg-0">
+        <section className="text-center container py-0 py-sm-0 py-md-0 py-lg-0 mt-2 mt-sm-2 mt-md-2 mt-lg-0">
+            <div className="row py-0 py-sm-0 py-md-0 py-lg-0 mt-2 mt-sm-2 mt-md-2 mt-lg-0">
                 <div className="">
                     <h1 className="h1">Currency Forecasting</h1>
                     <p className="lead text-body-secondar" style={{

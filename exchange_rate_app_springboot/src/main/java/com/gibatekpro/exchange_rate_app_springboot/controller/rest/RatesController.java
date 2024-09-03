@@ -10,6 +10,7 @@ import com.gibatekpro.exchange_rate_app_springboot.service.CurrencyListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,6 @@ public class RatesController {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private final ConversionService conversionService;
-    private final CurrencyRepo currencyRepo;
     private final CurrencyListService currencyListService;
 
     @GetMapping("latest")
@@ -68,7 +68,7 @@ public class RatesController {
 
     //This endpoint handles fetching list of currencies requests
     @GetMapping("currency-list")
-    public ResponseEntity<CurrencyApiResponse> getConversion() {
+    public ResponseEntity<CurrencyApiResponse> getCurrencyList() {
 
         //Logs the details of the currency list request
         logger.info("Getting currency list");

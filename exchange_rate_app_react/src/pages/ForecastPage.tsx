@@ -125,9 +125,22 @@ export const ForecastPage: React.FC = () => {
                                setBaseSelection={setBaseSelection}/>
             {
                 forecastData &&
-                <ForecastGraph
-                    forecastData={forecastData}
-                />
+                <section className="text-center container py-5 py-sm-5 py-md-5 py-lg-0 mt-5 mt-sm-5 mt-md-5 mt-lg-0">
+                    <div className="row py-5 py-sm-5 py-md-5 py-lg-0 mt-5 mt-sm-5 mt-md-5 mt-lg-0">
+                        <ForecastGraph
+                            forecastData={forecastData}
+                        />
+                    </div>
+                </section>
+
+            }
+            {
+                !forecastData &&
+                <section className="text-center container py-5 py-sm-5 py-md-5 py-lg-0 mt-5 mt-sm-5 mt-md-5 mt-lg-0">
+                    <div className="row py-5 py-sm-5 py-md-5 py-lg-0 mt-5 mt-sm-5 mt-md-5 mt-lg-0">
+                    </div>
+                </section>
+
             }
             <ForecastModelsExplanation/>
             {

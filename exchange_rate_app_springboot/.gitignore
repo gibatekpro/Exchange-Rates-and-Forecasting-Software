@@ -38,3 +38,4 @@ out/
 /src/main/resources/exchange-rate-app-9a2c0-firebase-adminsdk-y5ssh-69c4699f2b.json
 /src/main/resources/application-prod.yaml
 /src/main/resources/application-dev.yaml
+/src/main/resources/application-test.yaml

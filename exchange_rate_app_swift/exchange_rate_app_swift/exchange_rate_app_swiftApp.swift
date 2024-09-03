@@ -22,7 +22,7 @@ struct exchange_rate_app_swiftApp: App {
     @StateObject private var authViewModel = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
                 .environmentObject(authViewModel)
         }
     }

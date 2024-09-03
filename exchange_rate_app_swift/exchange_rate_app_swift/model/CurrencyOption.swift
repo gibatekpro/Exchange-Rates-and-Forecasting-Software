@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct CurrencyOption {
+struct CurrencyOption: Hashable, Identifiable {
+    let id = UUID()
     let label: String
     let value: String
 }

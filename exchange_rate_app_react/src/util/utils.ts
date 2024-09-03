@@ -12,7 +12,7 @@ export const Util = {
 export const CurrencyValue = (value: number | string): string => {
     return `£${parseFloat(value as string).toFixed(2)}`;
 };
-
+//d1iohvb35tah1i.cloudfront.net.
 export const firebaseConfig = {
     apiKey: "AIzaSyB4a5MepQIJluFC57HA0xxY0O5h-39b69Q",
     authDomain: "exchange-rate-app-9a2c0.firebaseapp.com",

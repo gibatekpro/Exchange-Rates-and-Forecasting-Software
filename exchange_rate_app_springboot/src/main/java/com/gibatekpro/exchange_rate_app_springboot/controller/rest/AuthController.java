@@ -27,9 +27,4 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully");
     }
 
-    @PostMapping("/tester")
-    public String tester(){
-        return "tester";
-    }
-
 }

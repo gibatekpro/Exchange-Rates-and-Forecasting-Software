@@ -25,6 +25,7 @@
 		EA32C6CC2C69458600CF9A46 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CB2C69458600CF9A46 /* ResetPasswordView.swift */; };
 		EA32C6CE2C6981BF00CF9A46 /* ConversionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */; };
 		EA32C6D02C69862E00CF9A46 /* CurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */; };
+		EA4214532C879738002A5F62 /* ForecastApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4214522C879738002A5F62 /* ForecastApiResponse.swift */; };
 		EA5D86CE2C2F766400B7291E /* exchange_rate_app_swiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */; };
 		EA5D86D02C2F766400B7291E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86CF2C2F766400B7291E /* ContentView.swift */; };
 		EA5D86D22C2F766500B7291E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA5D86D12C2F766500B7291E /* Assets.xcassets */; };
@@ -32,6 +33,18 @@
 		EA5D86DF2C2F766600B7291E /* exchange_rate_app_swiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86DE2C2F766600B7291E /* exchange_rate_app_swiftTests.swift */; };
 		EA5D86E92C2F766600B7291E /* exchange_rate_app_swiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86E82C2F766600B7291E /* exchange_rate_app_swiftUITests.swift */; };
 		EA5D86EB2C2F766600B7291E /* exchange_rate_app_swiftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86EA2C2F766600B7291E /* exchange_rate_app_swiftUITestsLaunchTests.swift */; };
+		EA633B122C8519D800C150BB /* ConversionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B112C8519D800C150BB /* ConversionView.swift */; };
+		EA633B142C86346700C150BB /* ConversionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B132C86346700C150BB /* ConversionComponent.swift */; };
+		EA633B172C863CB400C150BB /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B162C863CB400C150BB /* HelperFunctions.swift */; };
+		EA633B192C867F7700C150BB /* RatesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B182C867F7700C150BB /* RatesComponent.swift */; };
+		EA633B1B2C8733C900C150BB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B1A2C8733C800C150BB /* MainView.swift */; };
+		EA633B1D2C87341200C150BB /* BottomNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B1C2C87341200C150BB /* BottomNav.swift */; };
+		EA633B1F2C8735C500C150BB /* ForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B1E2C8735C500C150BB /* ForecastView.swift */; };
+		EA633B212C8743CF00C150BB /* TimeSeriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B202C8743CF00C150BB /* TimeSeriesData.swift */; };
+		EA633B232C87446D00C150BB /* TimeSeriesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B222C87446D00C150BB /* TimeSeriesComponent.swift */; };
+		EA633B252C877F0F00C150BB /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B242C877F0F00C150BB /* ForecastViewModel.swift */; };
+		EA633B272C87811000C150BB /* ForecastComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B262C87811000C150BB /* ForecastComponent.swift */; };
+		EA633B292C87899600C150BB /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA633B282C87899600C150BB /* Method.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +81,7 @@
 		EA32C6CB2C69458600CF9A46 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionViewModel.swift; sourceTree = "<group>"; };
 		EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyOption.swift; sourceTree = "<group>"; };
+		EA4214522C879738002A5F62 /* ForecastApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastApiResponse.swift; sourceTree = "<group>"; };
 		EA5D86CA2C2F766400B7291E /* exchange_rate_app_swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exchange_rate_app_swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchange_rate_app_swiftApp.swift; sourceTree = "<group>"; };
 		EA5D86CF2C2F766400B7291E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,6 +92,18 @@
 		EA5D86E42C2F766600B7291E /* exchange_rate_app_swiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = exchange_rate_app_swiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA5D86E82C2F766600B7291E /* exchange_rate_app_swiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchange_rate_app_swiftUITests.swift; sourceTree = "<group>"; };
 		EA5D86EA2C2F766600B7291E /* exchange_rate_app_swiftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchange_rate_app_swiftUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EA633B112C8519D800C150BB /* ConversionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionView.swift; sourceTree = "<group>"; };
+		EA633B132C86346700C150BB /* ConversionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionComponent.swift; sourceTree = "<group>"; };
+		EA633B162C863CB400C150BB /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		EA633B182C867F7700C150BB /* RatesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatesComponent.swift; sourceTree = "<group>"; };
+		EA633B1A2C8733C800C150BB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		EA633B1C2C87341200C150BB /* BottomNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNav.swift; sourceTree = "<group>"; };
+		EA633B1E2C8735C500C150BB /* ForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastView.swift; sourceTree = "<group>"; };
+		EA633B202C8743CF00C150BB /* TimeSeriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesData.swift; sourceTree = "<group>"; };
+		EA633B222C87446D00C150BB /* TimeSeriesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSeriesComponent.swift; sourceTree = "<group>"; };
+		EA633B242C877F0F00C150BB /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
+		EA633B262C87811000C150BB /* ForecastComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastComponent.swift; sourceTree = "<group>"; };
+		EA633B282C87899600C150BB /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +136,7 @@
 		EA32C6A22C68FE7000CF9A46 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				EA633B152C863C9600C150BB /* functions */,
 				EA32C6A32C68FF9000CF9A46 /* ColorManager.swift */,
 				EA32C6A52C69003E00CF9A46 /* BaseApi.swift */,
 				EA32C6A72C6901B800CF9A46 /* DateFormatterUtils.swift */,
@@ -124,6 +151,9 @@
 				EA32C6AC2C6904F800CF9A46 /* TimeSeriesApiResponse.swift */,
 				EA32C6AE2C69050500CF9A46 /* FormValue.swift */,
 				EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */,
+				EA633B202C8743CF00C150BB /* TimeSeriesData.swift */,
+				EA633B282C87899600C150BB /* Method.swift */,
+				EA4214522C879738002A5F62 /* ForecastApiResponse.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -133,6 +163,7 @@
 			children = (
 				EA32C6B12C6906D400CF9A46 /* AuthViewModel.swift */,
 				EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */,
+				EA633B242C877F0F00C150BB /* ForecastViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -147,9 +178,13 @@
 		EA32C6BF2C692DCD00CF9A46 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA5D86CF2C2F766400B7291E /* ContentView.swift */,
 				EA32C6C02C692E1500CF9A46 /* LoginView.swift */,
 				EA32C6C92C693D9C00CF9A46 /* RegisterView.swift */,
 				EA32C6CB2C69458600CF9A46 /* ResetPasswordView.swift */,
+				EA633B112C8519D800C150BB /* ConversionView.swift */,
+				EA633B1A2C8733C800C150BB /* MainView.swift */,
+				EA633B1E2C8735C500C150BB /* ForecastView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -159,6 +194,11 @@
 			children = (
 				EA32C6C52C69324B00CF9A46 /* Spinner.swift */,
 				EA32C6C72C69340600CF9A46 /* Validate.swift */,
+				EA633B132C86346700C150BB /* ConversionComponent.swift */,
+				EA633B182C867F7700C150BB /* RatesComponent.swift */,
+				EA633B1C2C87341200C150BB /* BottomNav.swift */,
+				EA633B222C87446D00C150BB /* TimeSeriesComponent.swift */,
+				EA633B262C87811000C150BB /* ForecastComponent.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -194,7 +234,6 @@
 				EA32C6A92C6904B500CF9A46 /* model */,
 				EA32C6A22C68FE7000CF9A46 /* utils */,
 				EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */,
-				EA5D86CF2C2F766400B7291E /* ContentView.swift */,
 				EA5D86D12C2F766500B7291E /* Assets.xcassets */,
 				EA5D86D32C2F766500B7291E /* Preview Content */,
 				EA32C6C22C692FCB00CF9A46 /* Color.xcassets */,
@@ -225,6 +264,14 @@
 				EA5D86EA2C2F766600B7291E /* exchange_rate_app_swiftUITestsLaunchTests.swift */,
 			);
 			path = exchange_rate_app_swiftUITests;
+			sourceTree = "<group>";
+		};
+		EA633B152C863C9600C150BB /* functions */ = {
+			isa = PBXGroup;
+			children = (
+				EA633B162C863CB400C150BB /* HelperFunctions.swift */,
+			);
+			path = functions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,13 +414,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA32C6C62C69324B00CF9A46 /* Spinner.swift in Sources */,
+				EA633B1B2C8733C900C150BB /* MainView.swift in Sources */,
+				EA633B1D2C87341200C150BB /* BottomNav.swift in Sources */,
 				EA32C6A42C68FF9000CF9A46 /* ColorManager.swift in Sources */,
 				EA32C6CE2C6981BF00CF9A46 /* ConversionViewModel.swift in Sources */,
 				EA32C6D02C69862E00CF9A46 /* CurrencyOption.swift in Sources */,
+				EA4214532C879738002A5F62 /* ForecastApiResponse.swift in Sources */,
 				EA32C6CA2C693D9C00CF9A46 /* RegisterView.swift in Sources */,
+				EA633B232C87446D00C150BB /* TimeSeriesComponent.swift in Sources */,
+				EA633B192C867F7700C150BB /* RatesComponent.swift in Sources */,
+				EA633B172C863CB400C150BB /* HelperFunctions.swift in Sources */,
 				EA32C6CC2C69458600CF9A46 /* ResetPasswordView.swift in Sources */,
 				EA32C6AB2C6904D700CF9A46 /* ConversionApiResponse.swift in Sources */,
+				EA633B292C87899600C150BB /* Method.swift in Sources */,
+				EA633B272C87811000C150BB /* ForecastComponent.swift in Sources */,
+				EA633B212C8743CF00C150BB /* TimeSeriesData.swift in Sources */,
+				EA633B122C8519D800C150BB /* ConversionView.swift in Sources */,
 				EA32C6C82C69340600CF9A46 /* Validate.swift in Sources */,
+				EA633B142C86346700C150BB /* ConversionComponent.swift in Sources */,
 				EA32C6A82C6901B800CF9A46 /* DateFormatterUtils.swift in Sources */,
 				EA32C6AF2C69050500CF9A46 /* FormValue.swift in Sources */,
 				EA32C6A62C69003E00CF9A46 /* BaseApi.swift in Sources */,
@@ -381,7 +439,9 @@
 				EA5D86D02C2F766400B7291E /* ContentView.swift in Sources */,
 				EA5D86CE2C2F766400B7291E /* exchange_rate_app_swiftApp.swift in Sources */,
 				EA32C6C12C692E1500CF9A46 /* LoginView.swift in Sources */,
+				EA633B252C877F0F00C150BB /* ForecastViewModel.swift in Sources */,
 				EA32C6B22C6906D400CF9A46 /* AuthViewModel.swift in Sources */,
+				EA633B1F2C8735C500C150BB /* ForecastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
