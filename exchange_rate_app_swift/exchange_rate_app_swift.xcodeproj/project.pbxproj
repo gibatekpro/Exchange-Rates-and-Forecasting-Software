@@ -26,6 +26,8 @@
 		EA32C6CE2C6981BF00CF9A46 /* ConversionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */; };
 		EA32C6D02C69862E00CF9A46 /* CurrencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */; };
 		EA4214532C879738002A5F62 /* ForecastApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4214522C879738002A5F62 /* ForecastApiResponse.swift */; };
+		EA4214552C879EE5002A5F62 /* ForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4214542C879EE5002A5F62 /* ForecastData.swift */; };
+		EA4214572C879F1A002A5F62 /* ForecastChartComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4214562C879F1A002A5F62 /* ForecastChartComponent.swift */; };
 		EA5D86CE2C2F766400B7291E /* exchange_rate_app_swiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */; };
 		EA5D86D02C2F766400B7291E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D86CF2C2F766400B7291E /* ContentView.swift */; };
 		EA5D86D22C2F766500B7291E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA5D86D12C2F766500B7291E /* Assets.xcassets */; };
@@ -82,6 +84,8 @@
 		EA32C6CD2C6981BF00CF9A46 /* ConversionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionViewModel.swift; sourceTree = "<group>"; };
 		EA32C6CF2C69862E00CF9A46 /* CurrencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyOption.swift; sourceTree = "<group>"; };
 		EA4214522C879738002A5F62 /* ForecastApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastApiResponse.swift; sourceTree = "<group>"; };
+		EA4214542C879EE5002A5F62 /* ForecastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastData.swift; sourceTree = "<group>"; };
+		EA4214562C879F1A002A5F62 /* ForecastChartComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastChartComponent.swift; sourceTree = "<group>"; };
 		EA5D86CA2C2F766400B7291E /* exchange_rate_app_swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exchange_rate_app_swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA5D86CD2C2F766400B7291E /* exchange_rate_app_swiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exchange_rate_app_swiftApp.swift; sourceTree = "<group>"; };
 		EA5D86CF2C2F766400B7291E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				EA633B202C8743CF00C150BB /* TimeSeriesData.swift */,
 				EA633B282C87899600C150BB /* Method.swift */,
 				EA4214522C879738002A5F62 /* ForecastApiResponse.swift */,
+				EA4214542C879EE5002A5F62 /* ForecastData.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 				EA633B1C2C87341200C150BB /* BottomNav.swift */,
 				EA633B222C87446D00C150BB /* TimeSeriesComponent.swift */,
 				EA633B262C87811000C150BB /* ForecastComponent.swift */,
+				EA4214562C879F1A002A5F62 /* ForecastChartComponent.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 				EA32C6D02C69862E00CF9A46 /* CurrencyOption.swift in Sources */,
 				EA4214532C879738002A5F62 /* ForecastApiResponse.swift in Sources */,
 				EA32C6CA2C693D9C00CF9A46 /* RegisterView.swift in Sources */,
+				EA4214572C879F1A002A5F62 /* ForecastChartComponent.swift in Sources */,
 				EA633B232C87446D00C150BB /* TimeSeriesComponent.swift in Sources */,
 				EA633B192C867F7700C150BB /* RatesComponent.swift in Sources */,
 				EA633B172C863CB400C150BB /* HelperFunctions.swift in Sources */,
@@ -441,6 +448,7 @@
 				EA32C6C12C692E1500CF9A46 /* LoginView.swift in Sources */,
 				EA633B252C877F0F00C150BB /* ForecastViewModel.swift in Sources */,
 				EA32C6B22C6906D400CF9A46 /* AuthViewModel.swift in Sources */,
+				EA4214552C879EE5002A5F62 /* ForecastData.swift in Sources */,
 				EA633B1F2C8735C500C150BB /* ForecastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

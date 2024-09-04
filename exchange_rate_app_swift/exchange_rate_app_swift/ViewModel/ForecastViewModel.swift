@@ -11,7 +11,8 @@ class ForecastViewModel: ObservableObject {
     @Published var currencyOptions: [CurrencyOption] = []
     @Published var fetchCurrenciesErrorMessage: String? = nil
     @Published var isFetchCurrencyListLoading: Bool = false
-    @Published var conversionData: ConversionApiResponse? = nil
+    @Published var isForecastLoading: Bool = false
+    @Published var forecastData: ForecastApiResponse? = nil
     @Published var timeSeriesData: TimeSeriesApiResponse? = nil
 
     var sortedCurrencyOptions: [CurrencyOption] {
@@ -54,21 +55,17 @@ class ForecastViewModel: ObservableObject {
                     self.currencyOptions = currencyOptions
                     self.isFetchCurrencyListLoading = false
                    
-//                    Task {
-//                        
-//                        let todayDateString = HelperFunctions.dateToString(theDate: Date())
-//                        
-//                        //After initially fetching ths currency list, we want to fetch the initial conversion data
-//                        await self.convertCurrency(fromCurrency: "GBP", toCurrency: "USD", amount: "1", date: todayDateString)
-//                        self.initialConversionData = self.conversionData
-//                        
-//                        
-//                        //After initially fetching ths currency list, we want to fetch the initial timeseries data for 7 days
-//                        await self.fetchTimeSeriesData(fromCurrency: "GBP", toCurrency: "USD", conversionDate: todayDateString, timeSeriesLength: 4)
-//                        self.initialTimeSeriesData = self.timeSeriesData
-//                        self.isFetchCurrencyListLoading = false
-//                    
-//                    }
+                    Task {
+                        
+                        let tomorrow = Calendar.current.date(byAdding: .day, value: 2, to: Date())!
+                        let tomorrowDateString = HelperFunctions.dateToString(theDate: tomorrow)
+                        
+                        //After initially fetching ths currency list, we want to fetch the initial forecast data
+                        await self.fetchForecast(method: "sma", baseCurrency: "USD", forecastCurrency: "GBP", endDate: tomorrowDateString)
+                        print()
+                        self.isFetchCurrencyListLoading = false
+                    
+                    }
                 }
             } else {
                 isFetchCurrencyListLoading = false
@@ -77,6 +74,60 @@ class ForecastViewModel: ObservableObject {
         } catch {
             isFetchCurrencyListLoading = false
             print("Error fetching currencies: \(error)")
+        }
+    }
+    
+    
+    func fetchForecast(method: String, baseCurrency: String, forecastCurrency: String, endDate: String) async {
+        isForecastLoading = true
+        
+        
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let startDate = dateFormatter.string(from: today)
+        
+        let forecastUrl = "\(BaseApi.apiUrl)forecast/data"
+        var components = URLComponents(string: forecastUrl)!
+        components.queryItems = [
+            URLQueryItem(name: "method", value: method),
+            URLQueryItem(name: "baseCurrency", value: baseCurrency),
+            URLQueryItem(name: "forecastCurrency", value: forecastCurrency),
+            URLQueryItem(name: "startDate", value: startDate),
+            URLQueryItem(name: "endDate", value: endDate)
+        ]
+        
+        guard let url = components.url else {
+            print("Failed to construct URL")
+            isForecastLoading = false
+            return
+        }
+
+        print("Request URL: \(url)")
+
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                print("Failed to fetch forecast data: HTTP \(String(describing: (response as? HTTPURLResponse)?.statusCode))")
+                isForecastLoading = false
+                return
+            }
+
+            let decoder = JSONDecoder()
+            if let forecastResponse = try? decoder.decode(ForecastApiResponse.self, from: data) {
+                DispatchQueue.main.async {
+                    self.forecastData = forecastResponse
+                    self.isForecastLoading = false
+                    print(self.forecastData!)
+                }
+            } else {
+                isForecastLoading = false
+                print("Failed to parse forecast data")
+            }
+        } catch {
+            isForecastLoading = false
+            print("Error fetching forecast: \(error)")
         }
     }
 

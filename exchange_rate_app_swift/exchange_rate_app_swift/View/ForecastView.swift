@@ -34,6 +34,9 @@ struct ForecastView: View {
                     )
                     .environmentObject(forecastViewModel)
                     
+                    ForecastChartComponent()
+                        .environmentObject(forecastViewModel)
+                    
                 }
                 .padding()
             }.padding()
