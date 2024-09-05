@@ -25,6 +25,8 @@ public class ForecastServiceImpl implements ForecastService {
     private final ConversionService conversionService;
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private final int numDays = 9;
+
     @Override
     @Transactional
     public ForecastApiResponse getForecastFromExponentialMovingAverage(ForecastRequestBody forecastRequestBody) {
@@ -45,7 +47,7 @@ public class ForecastServiceImpl implements ForecastService {
 
 
         //Fetches the days for the time-series
-        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(9);
+        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(numDays);
         LocalDate previousEndDate = forecastRequestBody.getStartDate().minusDays(0);
         //Fetches the time-series data for the previous 10 days
         TimeSeriesApiResponse previousTimeSeriesResponse = conversionService.fetchTimeSeriesConversion(
@@ -146,7 +148,7 @@ public class ForecastServiceImpl implements ForecastService {
     @Transactional
     public ForecastApiResponse getForecastFromSimpleMovingAverage(ForecastRequestBody forecastRequestBody) {
         //Fetches the previous 10 days for the time-series data
-        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(9);
+        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(numDays);
         LocalDate previousEndDate = forecastRequestBody.getStartDate().minusDays(0);
 
         //Fetches the time-series data for the previous 10 days
@@ -209,7 +211,7 @@ public class ForecastServiceImpl implements ForecastService {
     @Transactional
     public ForecastApiResponse getForecastFromLeastSquare(ForecastRequestBody forecastRequestBody) {
         //Fetches the previous 10 days for the time-series data
-        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(9);
+        LocalDate previousStartDate = forecastRequestBody.getStartDate().minusDays(numDays);
         LocalDate previousEndDate = forecastRequestBody.getStartDate().minusDays(0);
 
         //Fetches the time-series data for the previous 10 days
