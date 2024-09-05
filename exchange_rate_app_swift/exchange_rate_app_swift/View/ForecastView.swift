@@ -37,20 +37,27 @@ struct ForecastView: View {
                     ForecastChartComponent()
                         .environmentObject(forecastViewModel)
                     
+                    ForecastComparisonComponent()
+                        .environmentObject(forecastViewModel)
+                    
                 }
                 .padding()
-            }.padding()
+            }
         }
     }
     
     private func forecastAction() {
         isLoading = true
         Task {
+            
             //Covert to Date
-            _ = HelperFunctions.dateToString(theDate: conversionDate)
+            let dateString = HelperFunctions.dateToString(theDate: conversionDate)
+            
+            await forecastViewModel.fetchForecast(method: selectedMethod.shortValue, baseCurrency: selectedBaseCurrency, forecastCurrency: selectedForecastCurrency, endDate: dateString)
             
             isLoading = false
         }
+        
         
     }
     

@@ -17,43 +17,48 @@ struct ForecastChartComponent: View {
                 .font(.headline)
                 .foregroundColor(.black)
             
-            if let forecastData = forecastViewModel.forecastData?.dataPoints, !forecastData.isEmpty {
-                
-                let minYValue = forecastData.map { $0.value }.min() ?? 0
-                let maxYValue = forecastData.map { $0.value }.max() ?? 1
-                
-                Chart(forecastData) { item in
-                    LineMark(
-                        x: .value("Date", item.date),
-                        y: .value("Value", item.value)
-                    )
-                }
-                .chartYScale(domain: minYValue...maxYValue)
-                .chartXAxis {
-                    AxisMarks(values: .stride(by: .day, count: 1)) { _ in
-                        AxisGridLine()
-                        AxisValueLabel(format: .dateTime.month().day())
-                            .foregroundStyle(.black)
+                if let forecastData = forecastViewModel.forecastData?.dataPoints, !forecastData.isEmpty {
+                    Chart {
+                        ForEach(forecastData) { item in
+                            BarMark(
+                                x: .value("Date", HelperFunctions.dateToString(theDate: item.date)),
+                                y: .value("Value", item.value)
+                            ).annotation(position: .top) {
+                                Text("\(item.value, specifier: "%.6f")")
+                                    .foregroundColor(.blue)
+                                    .font(.caption)
+                            }
+                        }
                     }
-                }
-                .chartYAxis {
-                    AxisMarks(values: .automatic) { _ in
-                        AxisGridLine()
-                        AxisValueLabel()
-                            .foregroundStyle(.black)
+                    .chartScrollableAxes(.horizontal)
+                    .chartXVisibleDomain(length: 4)
+                    .frame(height: 400)
+                    .background(ColorManager.backgroundColor)
+                    .chartXAxis {
+                        AxisMarks(values: forecastData.map { HelperFunctions.dateToString(theDate: $0.date) }) { value in
+                            AxisGridLine().foregroundStyle(Color.black.opacity(0.5))
+                            AxisValueLabel() {
+                                Text(value.as(String.self) ?? "")
+                                    .foregroundColor(.black)
+                            }
+                        }
                     }
+                    .chartYAxis {
+                        AxisMarks() { value in
+                            AxisGridLine().foregroundStyle(Color.black.opacity(0.5))
+                            AxisValueLabel() {
+                                Text("\(value.as(Double.self) ?? 0.0, specifier: "%.2f")")
+                                    .foregroundColor(.black)
+                            }
+                        }
+                    }
+                } else {
+                    Spinner()
                 }
-                .frame(height: 200)
-                .padding()
-                .background(ColorManager.backgroundColor)
-                .cornerRadius(12)
-                .shadow(radius: 4)
-            } else {
-                Spinner()
             }
-        }
         .padding()
     }
+    
 }
 
 #Preview {

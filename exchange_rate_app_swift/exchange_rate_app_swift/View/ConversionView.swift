@@ -49,7 +49,7 @@ struct ConversionView: View {
                     RatesComponent(conversionRate: $conversionRate, fromCurrency: $fromCurrency, toCurrency: $toCurrency)
                 }
                 .padding()
-            }.padding()
+            }
         }
     }
     

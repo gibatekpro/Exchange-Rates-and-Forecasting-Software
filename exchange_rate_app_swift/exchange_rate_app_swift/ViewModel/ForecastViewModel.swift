@@ -9,6 +9,9 @@ import Foundation
 
 class ForecastViewModel: ObservableObject {
     @Published var currencyOptions: [CurrencyOption] = []
+    @Published var forecastComparisonData: [ForecastComparison] = []
+    @Published var isFetchForecastComparisonLoading: Bool = false
+    @Published var fetchForecastComparisonErrorMessage: String? = nil
     @Published var fetchCurrenciesErrorMessage: String? = nil
     @Published var isFetchCurrencyListLoading: Bool = false
     @Published var isForecastLoading: Bool = false
@@ -65,6 +68,7 @@ class ForecastViewModel: ObservableObject {
                         print()
                         self.isFetchCurrencyListLoading = false
                     
+                        await self.fetchForecastComparisonData()
                     }
                 }
             } else {
@@ -119,7 +123,7 @@ class ForecastViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.forecastData = forecastResponse
                     self.isForecastLoading = false
-                    print(self.forecastData!)
+                    print(self.forecastData?.dataPoints as Any)
                 }
             } else {
                 isForecastLoading = false
@@ -130,5 +134,80 @@ class ForecastViewModel: ObservableObject {
             print("Error fetching forecast: \(error)")
         }
     }
+    
+    func fetchForecastComparisonData() async {
+            isFetchForecastComparisonLoading = true
+            fetchForecastComparisonErrorMessage = nil
+            let fetchForecastComparisonUrl = "\(BaseApi.apiUrl)forecast/comparison-data"
+            
+            guard let url = URL(string: fetchForecastComparisonUrl) else {
+                print("Invalid URL: \(fetchForecastComparisonUrl)")
+                DispatchQueue.main.async {
+                    self.isFetchForecastComparisonLoading = false
+                    self.fetchForecastComparisonErrorMessage = "Invalid URL"
+                }
+                return
+            }
+            
+            print(fetchForecastComparisonUrl)
+            
+            do {
+                let (data, response) = try await URLSession.shared.data(from: url)
+                
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    DispatchQueue.main.async {
+                        self.isFetchForecastComparisonLoading = false
+                        self.fetchForecastComparisonErrorMessage = "Failed to fetch data: HTTP \(String(describing: (response as? HTTPURLResponse)?.statusCode))"
+                    }
+                    return
+                }
+                
+                if let json = try? JSONSerialization.jsonObject(with: data, options: []),
+                   let response = json as? [String: Any],
+                   let success = response["success"] as? Bool, success,
+                   let forecastComparisons = response["forecastComparisons"] as? [[String: Any]] {
+                    
+                    let comparisonData = forecastComparisons.map { item -> ForecastComparison in
+                        let forecastData = item["forecastData"] as? [String: Any] ?? [:]
+                        let baseCurrencyData = forecastData["baseCurrency"] as? [String: Any] ?? [:]
+                        let forecastCurrencyData = forecastData["forecastCurrency"] as? [String: Any] ?? [:]
+                        
+                        let baseCurrency = baseCurrencyData["currencyCode"] as? String ?? ""
+                        let forecastCurrency = forecastCurrencyData["currencyCode"] as? String ?? ""
+                        let smaRate = forecastData["smaRate"] as? Double ?? 0.0
+                        let emaRate = forecastData["emaRate"] as? Double ?? 0.0
+                        let lsmRate = forecastData["lsmRate"] as? Double ?? 0.0
+                        let actualRate = item["conversionRate"] as? Double ?? 0.0
+                        
+                        return ForecastComparison(
+                            baseCurrency: baseCurrency,
+                            forecastCurrency: forecastCurrency,
+                            smaRate: smaRate,
+                            emaRate: emaRate,
+                            lsmRate: lsmRate,
+                            actualRate: actualRate
+                        )
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.forecastComparisonData = comparisonData
+                        self.isFetchForecastComparisonLoading = false
+                        print(self.forecastComparisonData)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.isFetchForecastComparisonLoading = false
+                        self.fetchForecastComparisonErrorMessage = "Failed to fetch forecast comparison data: Invalid response"
+                    }
+                }
+                
+            } catch {
+                DispatchQueue.main.async {
+                    self.isFetchForecastComparisonLoading = false
+                    self.fetchForecastComparisonErrorMessage = "Error fetching forecast comparison data: \(error)"
+                }
+            }
+        }
+
 
 }
